@@ -1,7 +1,16 @@
 import React from 'react'
 import logo from '../Logo/AnyNotes_Logo.png'
-
+import Cookies from "js-cookie";
+import { useNavigate } from 'react-router-dom';
 const Nav = () => {
+  
+  const navigate = useNavigate();
+
+  const handleLogout = () => {   
+    Cookies.remove("token");
+    navigate("/login");
+  }
+
   return (
     <>
     {/* design a login page */}
@@ -11,7 +20,7 @@ const Nav = () => {
             
         </div>
         <div>
-            <button className='bg-white text-black font-semibold hover:bg-gray-700 px-3 py-2 rounded-md'>github</button>
+            <button className='bg-white text-black font-semibold hover:bg-gray-700 px-3 py-2 rounded-md' onClick={handleLogout}>Logout</button>
         </div>
     </div>
     </>

@@ -3,16 +3,29 @@ import { useParams, useNavigate } from "react-router-dom";
 import Nav from "./Nav";
 import NoteCard from "./NoteCard";
 import axios from "axios";
+import Cookies from "js-cookie"; 
+import { jwtDecode } from "jwt-decode";
+import toast, { Toaster } from 'react-hot-toast';
 
-const NotesPage = () => {
+const  NotesPage = () => {
   const { noteId } = useParams(); // Get noteId from URL
   const navigate = useNavigate(); // For updating the URL
   const [notes, setNotes] = useState("");
   const [heading, setHeading] = useState("");
-  const username = "loki";
+  // const username = "loki";
   const [allnotes, setAllNotes] = useState([]);
+  const [filteredNotes, setFilteredNotes] = useState([]);
   const [showNotesList, setShowNotesList] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
+  const token = Cookies.get('token'); 
+  const decoded = jwtDecode(token);
+  const username  = decoded.username;
+
+  console.log(username)
+
+  // search note 
+  
 
   const handleSaveNote = async () => {
     try {
@@ -40,6 +53,7 @@ const NotesPage = () => {
         }
       );
       if (res.status === 201) {
+        toast.success("note created successfully")
         getAllNotes();
       }
     } catch (err) {
@@ -51,10 +65,14 @@ const NotesPage = () => {
 
   const getAllNotes = async () => {
     try {
-      const data = await axios.get("https://anynotes-backend.vercel.app/notes/getNotes", {
+      const data = await axios.post("https://anynotes-backend.vercel.app/notes/getNotes",{
+        username
+      } ,
+      {
         headers: { "Content-Type": "application/json" },
       });
       setAllNotes(data.data.notes);
+      setFilteredNotes(data.data.notes);
     } catch (e) {
       console.error("Error fetching notes:", e);
     }
@@ -83,28 +101,29 @@ const NotesPage = () => {
     }
   }, [noteId, allnotes]); 
 
+  const searchNotes = (text) => {
+    setSearchText(text); // Update search text
+    const filtered = allnotes.filter((note) =>
+      note.title.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredNotes(filtered); 
+  };
+
 
   return (
     <div className="min-h-screen bg-[#212121] text-white">
+      <Toaster />
       <Nav />
       <div className="flex flex-col md:flex-row h-[calc(100vh-4rem)] bg-[#212121] pl-3 mt-2">
         <div
           className={`${
             showNotesList ? "block" : "hidden md:block"
-          } md:w-1/5  p-4 border-r border-gray-700 bg-[#212121]`}
+          } md:w-1/5 overflow-y-auto p-4 border-r border-gray-700 bg-[#212121]`}
         >
-          <button
-            className=" bg-blue-600 text-white py-2 rounded-md mb-4 hover:bg-blue-700 w-[100%] "
-            onClick={() => {
-              setNotes("");
-              setHeading("");
-              navigate("/notes");
-            }}
-          >
-            + Create Note
-          </button>
-          <div className="flex flex-col gap-2 bg-[#212121]  "  >
-            {allnotes .map((note, index) => (
+          <input placeholder="search for note" className="w-full mb-3 rounded-md p-2 focus:outline-none text-black font-semibold " value={searchText} 
+            onChange={(e) => searchNotes(e.target.value)}></input>
+          <div className="flex flex-col gap-2 bg-[#212121] overflow-y-auto "  >
+            {filteredNotes .map((note, index) => (
                <div key={index} onClick={handleNoteClick(note.noteId)} className="cursor-pointer">
                <NoteCard index={index + 1} heading={note.title} noteId = {note.noteId} />
              </div>

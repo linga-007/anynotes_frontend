@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import logo from '../Logo/AnyNotes_Logo.png'
+import Cookies from "js-cookie";
 
 const Login = () => {
     const navigate = useNavigate();
     const [username , setUserName] = useState();
     const [password , setPassword] = useState();
-    console.log(process.env.REACT_APP_BACKEND_URL);
+    // console.log(process.env.REACT_APP_BACKEND_URL);
     const handleLogin = async() =>{
         try{
             const res = await axios.post(`https://anynotes-backend.vercel.app/user/login` , {
@@ -19,6 +20,8 @@ const Login = () => {
             } 
         )
         console.log(res);
+       
+        Cookies.set("token", res.data.token, { expires: 1 });
         if(res.status === 201){
             navigate('/notes');
         }
@@ -34,7 +37,7 @@ const Login = () => {
           <img
             src={logo}
             alt=" Logo"
-            className="w-30 h-30  "
+            className="w-20 h-30  "
           />
           <h2 className="mt-6 text-2xl font-semibold text-center">
             Sign in to AnyNotes
@@ -74,12 +77,14 @@ const Login = () => {
         </div>
         <div className="text-center text-sm">
           
-          {/* <p className="mt-2">
+          <p className="mt-2">
             New to AnyNotes?{" "}
-            <a href="#" className="text-blue-400 hover:underline">
+            <button className="text-blue-400 hover:underline" onClick={
+              () => navigate('/signup')
+            }>
               Create an account
-            </a>
-          </p> */}
+            </button>
+          </p>
         </div>
       </div>
     </div>
