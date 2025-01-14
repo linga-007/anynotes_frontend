@@ -8,8 +8,11 @@ const Signup = () => {
     const navigate = useNavigate();
     const [username , setUserName] = useState();
     const [password , setPassword] = useState();
+    const [isLoading, setIsLoading] = useState(false); // New loading state
+    
     // console.log(process.env.REACT_APP_BACKEND_URL);
     const handleLogin = async() =>{
+      setIsLoading(true);
         try{
             const res = await axios.post(`https://anynotes-backend.vercel.app/user/signup` , {
                 username,
@@ -22,13 +25,24 @@ const Signup = () => {
         console.log(res);
         if(res.status === 201){
           toast.success('User created successfully!');
+          setIsLoading(false)
           
           setTimeout(() => {
             navigate('/notes');
           }, 2000);
         }
+        else if(res.status === 400){
+          toast.error('Invalid credentials. Please try again.');
+          setIsLoading(false);
+        }
         }
         catch(error){
+          if(error.status === 400){
+            toast.error('Username already Exists');
+            setUserName("");
+            setPassword("");
+            setIsLoading(false);
+          }
             console.error('Error logging in:', error);
         }
     }
@@ -70,19 +84,25 @@ const Signup = () => {
             />
             {/*  */}
           </div>
-          <button
-            type="submit"
-            className="w-full py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600"
-            onClick={handleLogin}
-          >
-            Sign up
-          </button>
+          {isLoading ? (
+                        <div className="flex justify-center">
+                            <div className="w-6 h-6 border-4 border-t-transparent border-white rounded-full animate-spin"></div>
+                        </div>
+                    ) : (
+                        <button
+                            type="submit"
+                            className="w-full py-2 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600"
+                            onClick={handleLogin}
+                        >
+                            Sign up
+                        </button>
+                    )}
         </div>
         <div className="text-center text-sm">
           
           <p className="mt-2">
-            Already have an Account{" "}
-            <button className="text-blue-400 hover:underline" onClick={(e)=> navigate('/login')}>
+            Already have an Account ? {" "}
+            <button className="text-blue-400 hover:underline font-semibold text-md" onClick={(e)=> navigate('/login')}>
               Login
             </button>
           </p>

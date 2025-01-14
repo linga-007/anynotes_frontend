@@ -35,19 +35,19 @@ const Home = () => {
 
      
         <div className="absolute inset-0 z-0">
-          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-ping" style={{ top: '20%', left: '10%' }}>
+          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-bounce" style={{ top: '20%', left: '10%' }}>
             copy
           </div>
-          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-ping" style={{ top: '30%', left: '70%' }}>
+          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-bounce" style={{ top: '30%', left: '70%' }}>
             paste
           </div>
-          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-ping" style={{ top: '50%', left: '20%' }}>
+          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-bounce" style={{ top: '50%', left: '20%' }}>
             share
           </div>
-          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-ping" style={{ top: '70%', left: '80%' }}>
+          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold animate-bounce " style={{ top: '70%', left: '80%' }}>
             type
           </div>
-          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold  animate-ping" style={{ top: '60%', left: '40%' }}>
+          <div className="absolute text-[#A4FFAF] text-xl md:text-2xl font-semibold  animate-bounce" style={{ top: '60%', left: '40%' }}>
             text
           </div>
         </div>
