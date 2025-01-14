@@ -16,7 +16,7 @@ const ChatTemplate = ({ content }) => {
       try {
         console.log(content);
         const res = await axios.post(
-          "http://127.0.0.1:5000/question",
+          "https://anynotes-python.onrender.com/question",
           {
             content: content,
             question: input,
