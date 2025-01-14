@@ -39,7 +39,7 @@ const Note = () => {
     <div className="h-screen w-screen flex flex-col bg-[#212121]">
     <Nav />
     <div className="w-full h-[90%] flex justify-center items-center ">
-      <div className="w-[80%] border-white border-l-2 border-r-2 h-[100%]  flex flex-col gap-5 justify-start items-center">
+      <div className="w-[90%] border-white border-l-2 border-r-2 h-[100%]  flex flex-col gap-5 justify-start items-center">
         <p className="font-semibold w-[50%] text-4xl flex justify-center items-center mt-3 text-white">
           {note.title}
         </p>
