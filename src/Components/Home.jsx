@@ -12,7 +12,7 @@ const Home = () => {
       console.log(decoded);
       navigate('/notes');
     }
-  },[])
+  },[decoded])
 
   const handleLogin = () => {
     navigate('/login');
