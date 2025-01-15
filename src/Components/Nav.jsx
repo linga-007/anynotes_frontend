@@ -15,7 +15,7 @@ const Nav = () => {
     <>
     {/* design a login page */}
     <div className='flex items-center justify-between px-6 bg-[#212121] pl-20 pr-10 border-b border-b-white'>
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center cursor-pointer' onClick={(e)=> navigate('/notes')}>
             <img className='' src={logo} alt='AnyNotes Logo' width={70} height={70}/>
             
         </div>

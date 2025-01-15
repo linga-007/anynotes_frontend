@@ -5,11 +5,13 @@ import axios from "axios";
 import message from "../Logo/message.png";
 import ChatTemplate from "./ChatTemplate";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const Note = () => {
   const { id } = useParams();
   const [note, setNote] = useState({});
   const [chatOpen, setChatOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getNote();
@@ -31,6 +33,7 @@ const Note = () => {
         console.log("Note not found");
       }
     } catch (error) {
+      
       console.error("Error fetching note:", error);
     }
   };
@@ -54,7 +57,7 @@ const Note = () => {
     
     )}
   
-    <div className="fixed bottom-5 right-10">
+    <div className="fixed bottom-5 right-24">
       <button
         className="p-2 rounded-md text-white font-semibold md:text-lg "
         onClick={(e) => setChatOpen(!chatOpen)}

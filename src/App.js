@@ -8,9 +8,13 @@ import Note from './Components/Note';
 import Signup from './Components/Signup';
 import PrivateRoute from './Components/PrivateRoute';
 import { Analytics } from "@vercel/analytics/react"
+import PageNotFound from './Components/PageNotFound';
+
+
 function App() {
 
   const route = createBrowserRouter([
+    
     {
       path: "/",
       element: <Home />,
@@ -23,6 +27,7 @@ function App() {
       path: "/signup",
       element: <Signup />,
     },
+    
     {
       path: "/notes",
       element: (
@@ -38,7 +43,11 @@ function App() {
           <Note />
         </PrivateRoute>
       ),
-    }
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
+    },
   ]);
   return (
     <>

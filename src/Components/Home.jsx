@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from "js-cookie"; 
+import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
   const navigate = useNavigate();
+  const token = Cookies.get('token'); 
+  const decoded = jwtDecode(token);
+  useEffect(()=>{
+    if(decoded){
+      console.log(decoded);
+      navigate('/notes');
+    }
+  },[])
 
   const handleLogin = () => {
     navigate('/login');
