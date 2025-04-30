@@ -1,6 +1,4 @@
-yaml
-Copy
-Edit
+
 name: CI/CD
 
 on:
